@@ -26,7 +26,7 @@ def click_and_crop(event, x, y, flags, param):
 
 
 if __name__ == '__main__':
-	fname = "./examples/" + str(random.randint(1, 1000000)) + "screengrab.png"
+	fname = "./image/" + str(random.randint(1, 1000000)) + "screengrab.png"
 	os.system(f"screencapture {fname}")
 	# initialize the list of reference points and boolean indicating
 	# whether cropping is being performed or not

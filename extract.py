@@ -1,5 +1,6 @@
 from PIL import Image
 import pytesseract
+import argparse
 import cv2
 import os
 
@@ -29,5 +30,11 @@ def extract_text(image, preprocess=None, fpath=None):
 	print(text)
 	return text
 
+
 if __name__ == '__main__':
-	extract_text(None, None, "./examples/download.png")
+	# construct the argument parse and parse the arguments
+	ap = argparse.ArgumentParser()
+	ap.add_argument("-i", "--image", required=True, help="path to input image to be OCR'd")
+	args = vars(ap.parse_args())
+
+	extract_text(None, None, args["image"])

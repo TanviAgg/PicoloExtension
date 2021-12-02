@@ -1,4 +1,4 @@
-#Picolo: The Smart Assistant
+# Picolo: The Smart Assistant
 
 ## Chrome extension setup
 1. Download this package.
