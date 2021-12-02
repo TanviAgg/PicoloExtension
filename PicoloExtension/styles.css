@@ -1,0 +1,90 @@
+.snackbar {
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: rgb(7, 7, 7);
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1000;
+  outline: 10000px solid rgba(0, 0, 0, 0.3);
+  left: 50%;
+  opacity: 1;
+  bottom: 80px;
+  font-size: 17px;
+  visibility: visible;
+  -webkit-animation: fadein 0.5s;
+  animation: fadein 0.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 80px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+#selection {
+  position: absolute;
+
+  border: 1px solid #0c65a5;
+}
+
+#selection.complete {
+  border-color: #0ca50e;
+}
+
+.closed {
+  cursor: url("chrome-extension://__MSG_@@extension_id__/images/cursor-icon.png"),
+    default !important;
+  user-select: none;
+
+  background-color: rgba(68, 65, 65, 0.082);
+}
+.mask {
+  left: 0px;
+  top: 0px;
+  width: 1759px;
+  height: 1759px;
+  z-index: 2147483644;
+  position: absolute;
+  min-height: initial;
+}
