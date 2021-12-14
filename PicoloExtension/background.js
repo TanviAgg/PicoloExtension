@@ -26,11 +26,24 @@ var screenshot = {
       );
 
       // save the image
-      var link = document.createElement("a");
-      link.download = "download.png";
-      link.href = screenshot.content.toDataURL();
-      doOCR(screenshot.content.toDataURL());
-      link.click();
+      // var link = document.createElement("a");
+      // link.download = "download.png";
+      // link.href = screenshot.content.toDataURL();
+      fetch('http://localhost:5000', {
+                      method: 'POST',
+                      body: JSON.stringify({
+                        title: 'image to load',
+                        body: screenshot.content.toDataURL()
+                      }),
+                      headers: {
+                        'Content-type': 'application/json; charset=UTF-8'
+                      }
+                    })
+                    .then(res => res.json())
+                    .then(console.log)
+      // console.log("Command: here printing after download, in save screenshot function")
+      // doOCR(screenshot.content.toDataURL()).then(r => console.log("Command:", r));
+      // link.click();
       screenshot.data = "";
     };
     image.src = screenshot.data;
