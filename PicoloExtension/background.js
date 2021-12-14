@@ -25,10 +25,7 @@ var screenshot = {
         dimensions.height
       );
 
-      // save the image
-      // var link = document.createElement("a");
-      // link.download = "download.png";
-      // link.href = screenshot.content.toDataURL();
+      // send the image to server for processing
       fetch('http://localhost:5000', {
                       method: 'POST',
                       body: JSON.stringify({
@@ -41,9 +38,6 @@ var screenshot = {
                     })
                     .then(res => res.json())
                     .then(console.log)
-      // console.log("Command: here printing after download, in save screenshot function")
-      // doOCR(screenshot.content.toDataURL()).then(r => console.log("Command:", r));
-      // link.click();
       screenshot.data = "";
     };
     image.src = screenshot.data;
@@ -92,28 +86,6 @@ let captureScreen = () => {
       );
     }
   );
-};
-
-const doOCR = async (image) => {
-  //const image = document.getElementById("image");
-  //const result = document.getElementById("result");
-
-  const { createWorker } = Tesseract;
-  const worker = createWorker({
-    workerPath: chrome.runtime.getURL("js/worker.min.js"),
-    langPath: chrome.runtime.getURL("traineddata"),
-    corePath: chrome.runtime.getURL("js/tesseract-core.wasm.js"),
-  });
-
-  await worker.load();
-  await worker.loadLanguage("eng");
-  await worker.initialize("eng");
-  const {
-    data: { text },
-  } = await worker.recognize(image);
-  console.log(text);
-  // result.innerHTML = `<p>OCR Result:</p><p>${text}</p>`;
-  await worker.terminate();
 };
 
 screenshot.init();
