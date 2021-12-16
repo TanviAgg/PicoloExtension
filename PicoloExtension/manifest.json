@@ -22,14 +22,11 @@
     }
   },
   "web_accessible_resources": [
-    "images/*",
-    "js/worker.min.js",
-    "js/tessearct-core.wasm.js",
-    "traineddata/*.traineddata.gz"
+    "images/*"
   ],
   "options_page": "options.html",
   "background": {
-    "scripts": ["js/tesseract.min.js", "background.js"],
+    "scripts": ["background.js"],
     "persistent": true
   },
   "content_scripts": [

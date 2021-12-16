@@ -1,5 +1,5 @@
 /*
-Content file to scrap web page to get answers of a question
+Content file to take a screenshot with user drawn box
 */
 
 chrome.extension.onMessage.addListener(function (msg, sender, sendResponse) {

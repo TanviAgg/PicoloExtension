@@ -25,12 +25,24 @@ var screenshot = {
         dimensions.height
       );
 
-      // save the image
-      var link = document.createElement("a");
-      link.download = "download.png";
-      link.href = screenshot.content.toDataURL();
-      doOCR(screenshot.content.toDataURL());
-      link.click();
+      // send the image to server for processing
+      fetch('http://localhost:5000', {
+                      method: 'POST',
+                      body: JSON.stringify({
+                        title: 'image to load',
+                        body: screenshot.content.toDataURL()
+                      }),
+                      headers: {
+                        'Content-type': 'application/json; charset=UTF-8'
+                      }
+                    })
+                    .then(res => {
+                      res.json()
+                          .then(val =>
+                              copyTextToClipboard(val)
+                          );
+                    }
+                    )
       screenshot.data = "";
     };
     image.src = screenshot.data;
@@ -81,26 +93,27 @@ let captureScreen = () => {
   );
 };
 
-const doOCR = async (image) => {
-  //const image = document.getElementById("image");
-  //const result = document.getElementById("result");
-
-  const { createWorker } = Tesseract;
-  const worker = createWorker({
-    workerPath: chrome.runtime.getURL("js/worker.min.js"),
-    langPath: chrome.runtime.getURL("traineddata"),
-    corePath: chrome.runtime.getURL("js/tesseract-core.wasm.js"),
-  });
-
-  await worker.load();
-  await worker.loadLanguage("eng");
-  await worker.initialize("eng");
-  const {
-    data: { text },
-  } = await worker.recognize(image);
-  console.log(text);
-  // result.innerHTML = `<p>OCR Result:</p><p>${text}</p>`;
-  await worker.terminate();
-};
-
 screenshot.init();
+
+function copyTextToClipboard(text) {
+  //Create a textbox field where we can insert text to.
+  var copyFrom = document.createElement("textarea");
+
+  //Set the text content to be the text you wished to copy.
+  copyFrom.textContent = text;
+
+  //Append the textbox field into the body as a child.
+  //"execCommand()" only works when there exists selected text, and the text is inside
+  //document.body (meaning the text is part of a valid rendered HTML element).
+  document.body.appendChild(copyFrom);
+
+  //Select all the text!
+  copyFrom.select();
+  document.execCommand('copy');
+  //(Optional) De-select the text using blur().
+  copyFrom.blur();
+
+  //Remove the textbox field from the document.body, so no other JavaScript nor
+  //other elements can get access to this.
+  document.body.removeChild(copyFrom);
+}
