@@ -68,14 +68,6 @@ class KarpRabin:
 			hash_val = ((self.hash_prefix[i]*self.r) + self.alphabet[self.T[i]]) % self.q
 			self.hash_prefix.append(hash_val)
 
-	# def precompute_hash_prefix_array(self):
-	# 	for i in range(self.T_len):
-	# 		hash_val = 0
-	# 		for j in range(i):
-	# 			hash_val += (self.alphabet[self.T[j]]*(self.pow_r[i+1-j])) % self.q
-	# 		self.hash_prefix.append(hash_val)
-
-
 	def init_alphabet(self):
 		alphabet_map = {}
 		alphabet_num = 1
