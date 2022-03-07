@@ -104,9 +104,8 @@ class KarpRabin:
 
 if __name__ == '__main__':
 	input_str, tests = read_input("./testfiles/in.txt")
-	q = int(math.pow(10,7) + 7)
-	# r = random.randint(1, q)
-	r = 10
+	q = int(math.pow(10, 7) + 7)
+	r = 3
 	rabinKarp = KarpRabin(r, q, input_str)
 	results = []
 	for test in tests:
