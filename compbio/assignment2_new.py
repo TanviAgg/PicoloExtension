@@ -1,3 +1,6 @@
+# NAME: TANVI AGGARWAL
+# SBU ID: 114353100
+
 import math
 
 
@@ -42,6 +45,12 @@ def read_and_compare_output(generated_output, output_file):
 
 
 def rank_strings(lst, radix=False):
+	"""
+	Sort the given list and rank them by reducing range of values to least possible values
+	:param lst: list to be sorted
+	:param radix: whether to use radix sort or not (it is not used for a_0 as we have char symbols)
+	:return: sorted list
+	"""
 	idx = 1
 	sorted_char_list = radix_sort_strings(lst, radix)
 	char_map = {}
@@ -55,40 +64,36 @@ def rank_strings(lst, radix=False):
 	return char_list
 
 
-def countingSort(array, place):
-	size = len(array)
-	output = [0] * size
-	count = [0] * 10
-	# Calculate count of elements
-	for i in range(0, size):
-		index = array[i] // place
-		count[index % 10] += 1
-	# Calculate cumulative count
-	for i in range(1, 10):
-		count[i] += count[i - 1]
-	# Place the elements in sorted order
-	i = size - 1
-	while i >= 0:
-		index = array[i] // place
-		output[count[index % 10] - 1] = array[i]
-		count[index % 10] -= 1
-		i -= 1
-	for i in range(0, size):
-		array[i] = output[i]
-
-
-def radix_sort_strings(array, radix=True):
+def radix_sort_strings(lst, radix=True):
+	"""
+	radix sorting to sort the list in O(n)
+	:param lst: list to be sorted
+	:param radix: whether to use radix sorting or not
+	:return: sorted list
+	"""
 	if not radix:
-		return sorted(array)
-	max_element = max(array)
-	place = 1
-	while max_element // place > 0:
-		countingSort(array, place)
-		place *= 10
-	return array
+		return sorted(lst)
+	num_digits = len(str(max(lst)))  # max number of digits in a number in list lst
+	for ith_pos in range(0, num_digits):
+		ith_sorted_buckets = [[] for _ in range(10)]  # buckets sorted by the i-th position
+		for i in lst:
+			num = (i // (10 ** ith_pos)) % 10
+			ith_sorted_buckets[num].append(i)
+		new_lst = []
+		for arr in ith_sorted_buckets:
+			new_lst.extend(arr)
+		lst = new_lst
+	return lst
 
 
 def build_b_array(a_i, i, base):
+	"""
+	builds the b_k array from a_k-1
+	:param a_i: the ith kmp array
+	:param i: this represents 2^k
+	:param base: the base to compute (a, b) as a*n + b
+	:return: the array b_i+1
+	"""
 	n = len(a_i)
 	b_next = []
 	for j in range(n-i):
@@ -132,7 +137,7 @@ class KMR:
 			# build table for 2^i
 			# build b_i using a_i-1
 			b_i = build_b_array(self.kmr_arrays[-1], self.pow_2[i], self.base)
-			self.kmr_arrays.append(rank_strings(b_i))
+			self.kmr_arrays.append(rank_strings(b_i, True))
 
 	def compute_kmr_rank(self, a, l):
 		"""
