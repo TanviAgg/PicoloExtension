@@ -46,7 +46,7 @@ def predict_values_using_beta(beta_estimate, df, features):
 
     Y_pred = X.dot(beta_estimate)
     residual = Y - Y_pred
-    sse = np.mean(residual ** 2)
+    sse = np.sum(residual ** 2)
 
     return Y, Y_pred, sse
 
@@ -68,14 +68,14 @@ if __name__ == "__main__":
     print("\nSSE using the first three features is {}\n".format(round(sse_part_a, 4)))
 
     print("---------------- part b -----------------")
-    features_part_b = [BETA_0_INTERCEPT, "bedrooms", "bathrooms", "size_sqft", "min_to_subway"]
+    features_part_b = [BETA_0_INTERCEPT, "bedrooms", "bathrooms", "size_sqft", "floor"]
     beta_estimate_part_b, beta_values_part_b = compute_beta_matrix(train_df, features_part_b)
     _, _, sse_part_b = predict_values_using_beta(beta_estimate_part_b, test_df, features_part_b)
     print(beta_values_part_b)
     print("\nSSE using the first four features is {}\n".format(round(sse_part_b, 4)))
 
     print("---------------- part c -----------------")
-    features_part_c = [BETA_0_INTERCEPT, "bedrooms", "bathrooms", "size_sqft", "min_to_subway",
+    features_part_c = [BETA_0_INTERCEPT, "bedrooms", "bathrooms", "size_sqft", "floor",
                        "has_roofdeck", "has_washer_dryer", "has_doorman", "has_elevator",
                        "has_dishwasher", "has_patio", "has_gym"]
     beta_estimate_part_c, beta_values_part_c = compute_beta_matrix(train_df, features_part_c)
@@ -84,13 +84,13 @@ if __name__ == "__main__":
     print("\nSSE using the first four features including amenities is {}\n".format(round(sse_part_c, 4)))
 
     print("---------------- part d -----------------")
-    features_part_d = [BETA_0_INTERCEPT, "bedrooms", "bathrooms", "size_sqft", "min_to_subway",
+    features_part_d = [BETA_0_INTERCEPT, "bedrooms", "bathrooms", "size_sqft", "floor",
                        "has_roofdeck", "has_washer_dryer", "has_doorman", "has_elevator",
-                       "has_dishwasher", "has_patio", "has_gym", "no_fee"]
+                       "has_dishwasher", "has_patio", "has_gym", "building_age_yrs"]
     beta_estimate_part_d, beta_values_part_d = compute_beta_matrix(train_df, features_part_d)
     _, _, sse_part_d = predict_values_using_beta(beta_estimate_part_d, test_df, features_part_d)
     print(beta_values_part_d)
-    print("\nSSE using the first four features including amenities and no fee is {}\n".format(round(sse_part_d, 4)))
+    print("\nSSE using the first four features including amenities and building_age_yrs is {}\n".format(round(sse_part_d, 4)))
 
 
 
